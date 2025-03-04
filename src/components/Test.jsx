@@ -2,7 +2,8 @@ import React from "react";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-const Show = () => {
+// import { v4 as uuidv4 } from "uuid";
+const Test = () => {
   const [show, setShow] = useState(false);
   const [editState, setEditState] = useState({
     index: 0,
@@ -11,37 +12,9 @@ const Show = () => {
     password: "",
   });
   // console.log(editState);
-
-  // data is for fetching the localstorge data
   const data = window.localStorage.getItem("userData")
     ? JSON.parse(window.localStorage.getItem("userData"))
     : [];
-
-  //for modal close
-  const handleClose = () => setShow(false);
-
-  // Getting the updated input values from modal inputs
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditState((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  //for updating the specific data of user by modal
-  const handleSave = () => {
-    const updatedData = [...data];
-    updatedData[editState.index] = {
-      name: editState.name,
-      email: editState.email,
-      password: editState.password,
-    };
-    window.localStorage.setItem("userData", JSON.stringify(updatedData));
-    setShow(false);
-  };
-
-  // Opening the modal and fetching the specific data from user and placeing in the modal inputs
   const handleEdit = (index) => {
     setShow(true);
     console.log(index);
@@ -52,18 +25,25 @@ const Show = () => {
       password: data[index].password,
     });
   };
+  const handleClose = () => setShow(false);
 
-  // handleDelete is for deleting the specific data from the localstorage , in this case we are not deleting the data we are just not include that specific data in new array and save that new array in localstorage.
-  const handleDelete = (index) => {
-    // console.log("delete data ", data.name);
-    let updatedValues = [];
-    for (let i = 0; i < data.length; i++) {
-      if (i !== index) {
-        updatedValues.push(data[i]);
-      }
-    }
-    window.localStorage.setItem("userData", JSON.stringify(updatedValues));
-    window.location.reload();
+  const handleSave = () => {
+    const updatedData = [...data];
+    
+    updatedData[editState.index] = {
+      name: editState.name,
+      email: editState.email,
+      password: editState.password,
+    };
+    window.localStorage.setItem("userData", JSON.stringify(updatedData));
+    setShow(false);
+  };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
   return (
     <>
@@ -86,20 +66,13 @@ const Show = () => {
                 <td>{user.email}</td>
                 <td>{user.password}</td>
                 <td>
-                  <div className="d-flex gap-2 justify-content-center align-item-center">
-                    <button
-                      className="edit-btn"
-                      onClick={() => handleEdit(index)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="delete-btn"
-                      onClick={() => handleDelete(index)}
-                    >
-                      Delete
-                    </button>
-                  </div>
+                  <button
+                    className="edit-btn"
+                    onClick={() => handleEdit(index)}
+                  >
+                    Edit
+                  </button>
+                  {/* <button>Delete</button> */}
                 </td>
               </tr>
             );
@@ -153,4 +126,4 @@ const Show = () => {
   );
 };
 
-export default Show;
+export default Test;
