@@ -10,17 +10,13 @@ const Show = () => {
     email: "",
     password: "",
   });
-  // console.log(editState);
 
-  // data is for fetching the localstorge data
+  // console.log(editState);
   const data = window.localStorage.getItem("userData")
     ? JSON.parse(window.localStorage.getItem("userData"))
     : [];
-
-  //for modal close
   const handleClose = () => setShow(false);
 
-  // Getting the updated input values from modal inputs
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditState((prevState) => ({
@@ -29,7 +25,6 @@ const Show = () => {
     }));
   };
 
-  //for updating the specific data of user by modal
   const handleSave = () => {
     const updatedData = [...data];
     updatedData[editState.index] = {
@@ -41,7 +36,6 @@ const Show = () => {
     setShow(false);
   };
 
-  // Opening the modal and fetching the specific data from user and placeing in the modal inputs
   const handleEdit = (index) => {
     setShow(true);
     console.log(index);
@@ -53,12 +47,12 @@ const Show = () => {
     });
   };
 
-  // handleDelete is for deleting the specific data from the localstorage , in this case we are not deleting the data we are just not include that specific data in new array and save that new array in localstorage.
   const handleDelete = (index) => {
     // console.log("delete data ", data.name);
     let updatedValues = [];
     for (let i = 0; i < data.length; i++) {
       if (i !== index) {
+        console.log(i);
         updatedValues.push(data[i]);
       }
     }
